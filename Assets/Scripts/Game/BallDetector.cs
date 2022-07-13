@@ -5,33 +5,52 @@ using UnityEngine;
 /// </summary>
 public class BallDetector : MonoBehaviour
 {
-    [SerializeField] private string ballTagName;
+    [SerializeField] private string m_BallTagName;
 
-    private BallSpawner ballSpawner;
+    private BallSpawner m_BallSpawner;
 
-    // Play a sound when a ball collides with the game object
-    private AudioSource ballInsideAS;
+    private GameManager m_GameManager;
+
+    // Position on the (X, Z) plane
+    private Vector3 m_positionXZ;
     
     void Awake()
     {
-        ballInsideAS = GetComponent<AudioSource>();
-        ballSpawner = FindObjectOfType<BallSpawner>();
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        m_BallSpawner = FindObjectOfType<BallSpawner>();
+        m_GameManager = FindObjectOfType<GameManager>();
+        m_positionXZ = GetPositionXZ(transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag(ballTagName))
+        if (other.gameObject.CompareTag(m_BallTagName))
         {
-            ballInsideAS.PlayOneShot(ballInsideAS.clip);
             Destroy(other.gameObject);
-            ballSpawner.Spawn();
+            m_BallSpawner.Spawn();
+
+            Vector3 throwPosition = other.gameObject.GetComponent<Ball>().ThrowPosition;
+            m_GameManager.HandleBallThrow(GetDistanceFromThrowYZ(throwPosition));
         }
+    }
+
+    /// <summary>
+    /// Gets the distance from the throw position on the (X, Z) plane
+    /// </summary>
+    /// <param name="throwPosition">Position from where the distance is needed</param>
+    /// <returns>Computed distance</returns>
+    private float GetDistanceFromThrowYZ(Vector3 throwPosition)
+    {
+        Vector3 throwPositionXZ = GetPositionXZ(throwPosition);
+        return (throwPositionXZ - m_positionXZ).magnitude;
+    }
+
+    /// <summary>
+    /// Gets a position projected on the (X, Z) plane
+    /// </summary>
+    /// <param name="position">Position to project</param>
+    /// <returns>Projected position</returns>
+    private Vector3 GetPositionXZ(Vector3 position)
+    {
+        return new Vector3(position.x, 0, position.z);
     }
 }

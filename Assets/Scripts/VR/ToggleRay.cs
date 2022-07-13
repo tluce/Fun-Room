@@ -10,13 +10,13 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class ToggleRay : MonoBehaviour
 {
     [Tooltip("The direct interactor that's switched to")]
-    [SerializeField] private XRDirectInteractor directInteractor = null;
+    [SerializeField] private XRDirectInteractor m_DirectInteractor = null;
 
-    private XRRayInteractor rayInteractor = null;
+    private XRRayInteractor m_RayInteractor = null;
 
     private void Awake()
     {
-        rayInteractor = GetComponent<XRRayInteractor>();
+        m_RayInteractor = GetComponent<XRRayInteractor>();
     }
 
     public void ActivateRay()
@@ -35,12 +35,12 @@ public class ToggleRay : MonoBehaviour
     private bool TouchingObject()
     {
         List<IXRInteractable> targets = new List<IXRInteractable>();
-        directInteractor.GetValidTargets(targets);
+        m_DirectInteractor.GetValidTargets(targets);
         return (targets.Count > 0);
     }
 
     private void SetRayInteractorEnabled(bool value)
     {
-        rayInteractor.enabled = value;
+        m_RayInteractor.enabled = value;
     }
 }

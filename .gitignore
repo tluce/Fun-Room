@@ -73,3 +73,7 @@ crashlytics-build.properties
 
 # Mac
 .DS_Store
+
+Assets/TextMesh Pro/Documentation.meta
+Assets/TextMesh Pro/Documentation/TextMesh Pro User Guide 2016.pdf
+Assets/TextMesh Pro/Documentation/TextMesh Pro User Guide 2016.pdf.meta

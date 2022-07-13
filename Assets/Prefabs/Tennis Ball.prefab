@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6201741614517645911}
   - component: {fileID: -1695656799983992288}
   - component: {fileID: 2047411054}
-  - component: {fileID: 2047411053}
+  - component: {fileID: 2139884559639888213}
   m_Layer: 0
   m_Name: Tennis Ball
   m_TagString: Ball
@@ -115,7 +115,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &2047411053
+--- !u!114 &2139884559639888213
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5553500551040947074}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
+  m_Script: {fileID: 11500000, guid: f4e2eaf607cce4bb5af9f6c82a61c6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -230,3 +230,4 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
+  controller: {fileID: 0}
