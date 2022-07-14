@@ -8,7 +8,6 @@ public class BallDetector : MonoBehaviour
     [SerializeField] private string m_BallTagName;
 
     private BallSpawner m_BallSpawner;
-
     private GameManager m_GameManager;
 
     // Position on the (X, Z) plane
@@ -36,7 +35,7 @@ public class BallDetector : MonoBehaviour
     /// <summary>
     /// Gets the distance from the throw position on the (X, Z) plane
     /// </summary>
-    /// <param name="throwPosition">Position from where the distance is needed</param>
+    /// <param name="throwPosition">Position from where the distance is computed</param>
     /// <returns>Computed distance</returns>
     private float GetDistanceFromThrowYZ(Vector3 throwPosition)
     {

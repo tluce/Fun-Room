@@ -3,7 +3,7 @@ using TMPro;
 using System.Collections.Generic;
 
 /// <summary>
-/// Updates the score.
+/// Handle throws and update the score
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -12,21 +12,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI m_ScoreText;
     [SerializeField] private SoundEffects m_SoundEffects;
 
+    // Distance in meters
     private const float ThrowDistanceEasy = 1;
     private const float ThrowDistanceMedium = 2;
     private const float ThrowDistanceHard = 3;
 
-    private Dictionary<float, int> throwPoints;
+    // Number of points per throw distance
+    private Dictionary<float, int> m_ThrowPoints;
 
     private int m_ScoreValue = 0;
+    private int m_BestScoreValue = 0;
 
     private void Awake()
     {
-        // Set throw point values
-        throwPoints = new Dictionary<float, int>();
-        throwPoints.Add(ThrowDistanceEasy, 1);
-        throwPoints.Add(ThrowDistanceMedium, 2);
-        throwPoints.Add(ThrowDistanceHard, 5);
+        InitPointValues();
+        InitBestScore();
     }
 
     /// <summary>
@@ -45,15 +45,15 @@ public class GameManager : MonoBehaviour
             int points;
             if (throwDistance >= ThrowDistanceHard)
             {
-                points = throwPoints[ThrowDistanceHard];
+                points = m_ThrowPoints[ThrowDistanceHard];
             }
             else if (throwDistance >= ThrowDistanceMedium)
             {
-                points = throwPoints[ThrowDistanceMedium];
+                points = m_ThrowPoints[ThrowDistanceMedium];
             }
             else
             {
-                points = throwPoints[ThrowDistanceEasy];
+                points = m_ThrowPoints[ThrowDistanceEasy];
             }
 
             UpdateScore(points);
@@ -66,12 +66,48 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Updates the score
     /// </summary>
-    /// <param name="points">Points to add</param>
+    /// <param name="points">Points to add to the current score</param>
     private void UpdateScore(int points)
     {
         m_InstructionsBackground.SetActive(false);
+
         m_ScoreValue+= points;
-        m_ScoreText.text = $"Score: {m_ScoreValue}";
+        if (m_ScoreValue > m_BestScoreValue)
+        {
+            m_BestScoreValue = m_ScoreValue;
+            ScoreManager.SaveBestScore(m_BestScoreValue);
+        }
+        m_ScoreText.text = GetScoreText();
         m_ScoreBackground.SetActive(true);
+    }
+
+    /// <summary>
+    /// Initializes the m_ThrowPoints dictionary
+    /// </summary>
+    private void InitPointValues()
+    {
+        m_ThrowPoints = new Dictionary<float, int>();
+        m_ThrowPoints.Add(ThrowDistanceEasy, 1);
+        m_ThrowPoints.Add(ThrowDistanceMedium, 2);
+        m_ThrowPoints.Add(ThrowDistanceHard, 5);
+    }
+
+    /// <summary>
+    /// Initializes the best score value and text
+    /// </summary>
+    private void InitBestScore()
+    {
+        m_BestScoreValue = ScoreManager.GetBestScore();
+        if (m_BestScoreValue > 0)
+        {
+            m_InstructionsBackground.SetActive(false);
+            m_ScoreText.text = GetScoreText();
+            m_ScoreBackground.SetActive(true);
+        }
+    }
+
+    private string GetScoreText()
+    {
+        return $"Best Score: {m_BestScoreValue}\nScore: {m_ScoreValue}";
     }
 }

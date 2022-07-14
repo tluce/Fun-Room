@@ -27,9 +27,10 @@ public class BallSpawner : MonoBehaviour
             elapsedTime = 0;
 
             Ball ball = FindObjectOfType<Ball>();
+
+            // Spaw a ball if there's none or it's no longer inside the room
             if (ball == null || ball.gameObject.transform.position.y < BallYBound)
-            {
-                // Spaw a ball if there's none or it's no longer inside the room
+            {                
                 if (ball != null)
                 {
                     Destroy(ball.gameObject);

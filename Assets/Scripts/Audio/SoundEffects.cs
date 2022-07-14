@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Play success and failure sound effects
+/// </summary>
 public class SoundEffects : MonoBehaviour
 {
     [SerializeField] private AudioClip m_SuccessClip;

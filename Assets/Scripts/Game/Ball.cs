@@ -14,12 +14,6 @@ public class Ball : XRGrabInteractable
         get { return m_ThrowPosition; }
     }
 
-    protected override void OnHoverEntered(HoverEnterEventArgs args)
-    {
-        base.OnHoverEntered(args);
-        m_ThrowPosition = args.interactorObject.transform.position;
-    }
-
     public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
     {
         base.ProcessInteractable(updatePhase);
